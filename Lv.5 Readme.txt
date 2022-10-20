@@ -2,5 +2,7 @@ Level 5, Script me jo function banae hai uske execution le baad humlog ko 4 numb
 ke hisab se nikala gaya hoga aur 1 out of 2 array bhi milega jisme operators orderly format me stored rahega. Ye dono ko milake expression banane ka tarike nahi mila abhi tak humko,
 Ek string wala approach try kar rahe hai.
 
+String wala approach kaam to kiya hai .. ab pura expression ban gaya hai, bas wo string me stored hai, to string wale expression ko solve karne ka tarika khojna hoga.
+
 Baaki saara level ka scripts bhi ban gaya hai, aur sabko test bhi kar liye hai. Ab tu dekh le ek baar script sab phir implement kar de. 
   
