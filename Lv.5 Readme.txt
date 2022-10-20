@@ -1,0 +1,6 @@
+Level 5, Script me jo function banae hai uske execution le baad humlog ko 4 numbers(n1, n2, n3, n4) milega jo ke operators[(+, x, -, /) = (1, 2, 3, 4)], 
+ke hisab se nikala gaya hoga aur 1 out of 2 array bhi milega jisme operators orderly format me stored rahega. Ye dono ko milake expression banane ka tarike nahi mila abhi tak humko,
+Ek string wala approach try kar rahe hai.
+
+Baaki saara level ka scripts bhi ban gaya hai, aur sabko test bhi kar liye hai. Ab tu dekh le ek baar script sab phir implement kar de. 
+  
