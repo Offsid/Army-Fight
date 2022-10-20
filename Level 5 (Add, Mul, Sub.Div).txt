@@ -68,8 +68,8 @@ public class HelloWorld
                 	   	exp += " * ";
                     		exp += n[c+1].ToString();
                 	}    
-                	else if(opsubarr[c]==4){
-                		exp += " / ";
+                	else if(opsubarr[c]==3){
+                		exp += " - ";
                     		exp += n[c+1].ToString();
                 	}
                 	c++;
