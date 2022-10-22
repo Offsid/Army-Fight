@@ -1,0 +1,279 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+public class HelloWorld
+{
+    static void randomize(int []arr, int n){
+        // Creating a object
+        // for Random class
+        Random r = new Random();
+        // Start from the last element and
+        // swap one by one. We don't need to
+        // run for the first element
+        // that's why i > 0
+        for (int i = n - 1; i > 0; i--)
+        {
+             
+            // Pick a random index
+            // from 0 to i
+            int j = r.Next(0, i+1);
+            // Swap arr[i] with the
+            // element at random index
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    public static int evaluate(string expression){
+		char[] tokens = expression.ToCharArray();
+
+		// Stack for numbers: 'values'
+		Stack<int> values = new Stack<int>();
+
+		// Stack for Operators: 'ops'
+		Stack<char> ops = new Stack<char>();
+
+		for (int i = 0; i < tokens.Length; i++)
+		{
+			// Current token is a whitespace, skip it
+			if (tokens[i] == ' ')
+			{
+				continue;
+			}
+
+			// Current token is a number,
+			// push it to stack for numbers
+			if (tokens[i] >= '0' && tokens[i] <= '9')
+			{
+				StringBuilder sbuf = new StringBuilder();
+				
+				// There may be more than
+				// one digits in number
+				while (i < tokens.Length &&
+						tokens[i] >= '0' &&
+							tokens[i] <= '9')
+				{
+					sbuf.Append(tokens[i++]);
+				}
+				values.Push(int.Parse(sbuf.ToString()));
+			
+				// Right now the i points to
+				// the character next to the digit,
+				// since the for loop also increases
+				// the i, we would skip one
+				// token position; we need to
+				// decrease the value of i by 1 to
+				// correct the offset.
+				i--;
+			}
+
+			// Current token is an opening
+			// brace, push it to 'ops'
+			else if (tokens[i] == '(')
+			{
+				ops.Push(tokens[i]);
+			}
+
+			// Closing brace encountered,
+			// solve entire brace
+			else if (tokens[i] == ')')
+			{
+				while (ops.Peek() != '(')
+				{
+				values.Push(applyOp(ops.Pop(),
+								values.Pop(),
+								values.Pop()));
+				}
+				ops.Pop();
+			}
+
+			// Current token is an operator.
+			else if (tokens[i] == '+' ||
+					tokens[i] == '-' ||
+					tokens[i] == '*' ||
+					tokens[i] == '/')
+			{
+				
+				// While top of 'ops' has same
+				// or greater precedence to current
+				// token, which is an operator.
+				// Apply operator on top of 'ops'
+				// to top two elements in values stack
+				while (ops.Count > 0 &&
+						hasPrecedence(tokens[i],
+									ops.Peek()))
+				{
+				values.Push(applyOp(ops.Pop(),
+								values.Pop(),
+								values.Pop()));
+				}
+
+				// Push current token to 'ops'.
+				ops.Push(tokens[i]);
+			}
+		}
+
+		// Entire expression has been
+		// parsed at this point, apply remaining
+		// ops to remaining values
+		while (ops.Count > 0)
+		{
+			values.Push(applyOp(ops.Pop(),
+							values.Pop(),
+							values.Pop()));
+		}
+
+		// Top of 'values' contains
+		// result, return it
+		return values.Pop();
+	}
+
+	// Returns true if 'op2' has
+	// higher or same precedence as 'op1',
+	// otherwise returns false.
+	public static bool hasPrecedence(char op1, char op2){
+		if (op2 == '(' || op2 == ')')
+		{
+			return false;
+		}
+		if ((op1 == '*' || op1 == '/') &&
+			(op2 == '+' || op2 == '-'))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	// A utility method to apply an
+	// operator 'op' on operands 'a'
+	// and 'b'. Return the result.
+	public static int applyOp(char op, int b, int a){
+		switch (op)
+		{
+		case '+':
+			return a + b;
+		case '-':
+			return a - b;
+		case '*':
+			return a * b;
+		case '/':
+			if (b == 0)
+			{
+				throw new
+				System.NotSupportedException(
+					"Cannot divide by zero");
+			}
+			return a / b;
+		}
+		return 0;
+	}
+    public static void Main(string[] args)
+    {
+        Random random = new Random();
+        int[] opsubarr = new int[] { 1, 2, 3};
+        int[] opdivarr = new int[] { 1, 2, 4};
+        int n1,n2,n3,n4,Enemy,opcode,temp;
+        temp = random.Next(1,3);
+        if(temp == 1){
+           randomize (opsubarr, 3);
+           n1 = random.Next(5,10);
+            if(opsubarr[0] > 2)
+                n2 = random.Next(1,4);
+            else
+                n2 = random.Next(1,10);
+            
+            if(opsubarr[1] > 2)
+                n3 = random.Next(1,4);
+            else
+                n3 = random.Next(1,10);    
+        
+            if(opsubarr[2] > 2)
+                n4 = random.Next(1,4);
+            else
+                n4 = random.Next(1,10);
+        
+            
+	//Expression bulider from given numbers and operators
+		int[] n = new int[] {n1 , n2 , n3 , n4 };
+       		String exp;
+        	exp = n[0].ToString();
+        	int c=0;
+        	while(c<3){
+                	if(opsubarr[c]==1){
+                  		exp += " + ";
+                  		exp += n[c+1].ToString();
+                	}   
+                	else if(opsubarr[c]==2){
+                	   	    exp += " * ";
+                    		exp += n[c+1].ToString();
+                	}    
+                	else if(opsubarr[c]==3){
+                		    exp += " - ";
+                    		exp += n[c+1].ToString();
+                	}
+                	c++;
+        	}           
+ 
+ 	       Console.WriteLine("Expression is :"+exp);
+			Console.WriteLine("Enemy : {0}",evaluate(exp));
+            Console.WriteLine("Value is {0} {1} {2} {3} opcode : {4}",n1,n2,n3,n4,temp);
+             Console.WriteLine("Operators are {0} {1} {2}", opsubarr[0], opsubarr[1], opsubarr[2]);
+        }
+        else{
+               randomize (opdivarr, 3);
+               n1 = random.Next(5,10);
+                if(opdivarr[0] > 2)
+                    n2 = random.Next(1,4);
+                else
+                    n2 = random.Next(1,10);
+                
+                if(opdivarr[1] > 2)
+                    n3 = random.Next(1,4);
+                else
+                    n3 = random.Next(1,10);    
+            
+                if(opdivarr[2] > 2)
+                    n4 = random.Next(1,4);
+                else
+                    n4 = random.Next(1,10);
+            
+	//Expression builder from given numbers and operators
+		    int[] n = new int[] {n1 , n2 , n3 , n4 };
+        	String exp;
+        	int c=0;
+        	exp = n[0].ToString();
+        	while(c<3){
+                	if(opdivarr[c]==1){
+                  		exp += " + ";
+                  		exp += n[c+1].ToString();
+                	}   
+                	else if(opdivarr[c]==2){
+                    		exp += " * ";
+                    		exp += n[c+1].ToString();
+                	}    
+               		else if(opdivarr[c]==4){
+                    		exp += " / ";
+                    		exp += n[c+1].ToString();
+                	}
+                	c++;
+        	}           
+ 
+        	Console.WriteLine("Expression is :"+exp); 
+        	Enemy = evaluate(exp);
+        	Console.WriteLine("Enemy : {0}",evaluate(exp));
+            Console.WriteLine("Value is {0} {1} {2} {3}, opcode : {4}",n1,n2,n3,n4,temp);
+            Console.WriteLine("Operators are {0} {1} {2}", opdivarr[0],opdivarr[1],opdivarr[2]);
+        }
+        
+    // When the function is invoked, call select between opsubarr[] and opdivarr[]
+    //then randomize the array with yates shuffle algorithm
+    //Then a expression is formed with the numbers and operator, in given order.Evaluationg it gives us the result
+    }
+}
